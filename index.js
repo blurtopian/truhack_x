@@ -6,6 +6,29 @@ const {
 } = require('./namespaceWrapper');
 
 
+if (app) {
+  app.get('/taskState', async (req, res) => {
+    const state = await namespaceWrapper.getTaskState();
+    console.log('TASK STATE HERE', state);
+    res.status(200).json({ taskState: state });
+  });
+
+  app.get('/value', async (req, res) => {
+    const value = await namespaceWrapper.storeGet('value');
+    console.log('value HERE', value);
+    res.status(200).json({ value: value });
+  });
+
+
+  app.post('/task', async (req, res) => {
+    const { round } = req.query;
+    let result = await coreLogic.task(round);
+    res.status(200).json({ result });
+  });
+
+}
+
+
 /**
  * setup
  * @description sets up the task node, particularly the inter-process communication to start and stop the task

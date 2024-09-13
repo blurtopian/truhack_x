@@ -96,7 +96,7 @@ class TwitterTask {
       ).publicKey;
       const key = submitterAccountKeyPair.toBase58();
       console.log('submitter key', key);
-      const response = await axios.get('http://localhost:3000/keywords', {
+      const response = await axios.get('http://localhost:3002/keywords', {
         params: {
           key: key,
         },
