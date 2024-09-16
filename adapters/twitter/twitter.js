@@ -591,8 +591,8 @@ class Twitter extends Adapter {
         });
         console.log('items.length', items.length);
 
-        // FIXME: Temporary code to get only the first item
-        items = [items[0]];
+        // FIXME: Temporary code to get selected item/s only
+        items = items.slice(0, 3);
         const parsedItems = [];
         for (const item of items) {
           await new Promise(resolve => setTimeout(resolve, 1000)); // Adds a 1-second delay
