@@ -101,11 +101,13 @@ class TwitterTask {
           key: key,
         },
       });
-      // console.log('keywords from middle server', response.data);
-      keyword = response.data;
+      console.log('keywords from middle server', response.data);
+      keyword = response.data[0].value;
+      console.log('keyword', keyword);
     } catch (error) {
       console.log(
         'No Keywords from middle server, loading local keywords.json',
+        error
       );
       const wordsList = require('./top1000words.json');
       const randomIndex = Math.floor(Math.random() * wordsList.length);
@@ -133,7 +135,6 @@ class TwitterTask {
       query: `https://x.com/search?q=${this.searchTerm}&src=typed_query&f=live`,
       // https://x.com/any/status/<tweets_id>
       depth: 3,
-      round: this.round,
       recursive: true,
       round: this.round,
     };
