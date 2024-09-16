@@ -10,6 +10,7 @@ const { namespaceWrapper } = require('../../namespaceWrapper');
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const { default: axios } = require('axios');
 
 /**
  * Twitter
@@ -582,24 +583,36 @@ class Twitter extends Adapter {
         });
 
         // Archive the tweets
-        const items = await this.page.evaluate(() => {
+        let items = await this.page.evaluate(() => {
           const elements = document.querySelectorAll(
             'article[aria-labelledby]',
           );
           return Array.from(elements).map(element => element.outerHTML);
         });
-        console.log(items.length);
+        console.log('items.length', items.length);
+
+        // FIXME: Temporary code to get only the first item
+        items = [items[0]];
+        const parsedItems = [];
         for (const item of items) {
           await new Promise(resolve => setTimeout(resolve, 1000)); // Adds a 1-second delay
           try {
             let data = await this.parseItem(item);
-            // console.log(data);
+            console.log('await this.parseItem', data);
+            parsedItems.push(data);
+
+            // const sentiment = await axios.post('http://localhost:3002/ai/sentiment', {
+            //   tweet: data
+            // });
+            // console.log('ai response', sentiment.data)
+
             if (data.tweets_id) {
               // Check if id exists in database
               let checkItem = {
                 id: data.tweets_id,
               };
               const existingItem = await this.db.getItem(checkItem);
+              console.log('existingItem', existingItem);
               if (!existingItem) {
                 // Store the item in the database
                 // const cid = await storeFiles(data, this.w3sKey);
@@ -617,6 +630,11 @@ class Twitter extends Adapter {
             );
           }
         }
+
+        const sentiments = await axios.post('http://localhost:3002/ai/sentiments', {
+          tweets: parsedItems
+        });
+        console.log('sentiments.data', sentiments.data);
 
         try {
           let dataLength = (await this.cids.getList({ round: round })).length;
