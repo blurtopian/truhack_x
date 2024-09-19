@@ -1,9 +1,10 @@
 # Name and metadata of your task
-task_name: 'KOII x Truflation Hackathon'
+task_name: 'KOII x Truf Hackathon'
 author: 'East'
 description: "We invite you to volunteer your spare Twitter account to help us archive Twitter by the keyword of your preference. This initiative is a not-for-profit endeavor, sponsored by the Koii Foundation. Before participating, please ensure that your volunteer Twitter account has passed the verification process. Rewards are calculated based on the amount of time your node remains online. The longer you stay online, the greater the reward you will receive. The base bounty per round is 3000 KOII, which will be divided among users who have made submissions in the last round. It's a good idea to use a secondary Twitter account for this project to maintain the smooth functioning of your main account."
 repositoryUrl: 'https://github.com/blurtopian/truhack_x'
 imageUrl: 'https://raw.githubusercontent.com/blurtopian/truhack_x/main/public/assets/images/icon.png'
+infoUrl: 'infoUrl'
 
 # network value can be DEVELOPMENT , ARWEAVE or IPFS, Recommended IPFS when deploying to testnet as the cli automatically takes care of uploading the executable with the help of web3.js key
 task_executable_network: 'IPFS'
@@ -12,26 +13,37 @@ task_executable_network: 'IPFS'
 task_audit_program: 'dist/main.js'
 
 # Total round time of your task : it must be given in slots and each slot is roughly equal to 408ms
-round_time: 13500
+round_time: 1500
 
-audit_window: 5000
-submission_window: 5000
+# The length in slots of the window for submitting task proofs/ditribution list. The submission window should be at least 1/3 of the round time.
+submission_window: 600
 
-# Amounts in KOII
+# The length in slots of the window for auditing submissions/distribution list each round. The audit window should be at least 1/3 of the round time.
+audit_window: 600
 
-minimum_stake_amount: 1.9
+# Minimum stake amount: The minimum amount of KOII (or KPL token if it's a KPL task) that a user must stake in order to participate in the task.
+# Staked tokens can be recovered when the user is finished running the task
+# Staked tokens can be lost if the user's submission fails an audit
+minimum_stake_amount: 1.5
+
+# Task Bounty Type: Can be KOII or KPL
+task_type: 'KPL'
+
+# ONLY if task type is KPL, otherwise ignored
+# Token Mint Address. Fire Token address is given as an example here.
+token_type: "EnDSWUFQKGqG9pQhBMuSKxPQkciNof4nS4GZYXMdnR5v"
 
 # total_bounty_amount cannot be grater than bounty_amount_per_round
 # total bounty is not accepted in case of update task
-total_bounty_amount: 100000
+total_bounty_amount: 10
+bounty_amount_per_round: 0.1
 
-bounty_amount_per_round: 3000
-
-#Number of times allowed to re-submit the distribution  list in case the distribution list is audited
+# Number of times the distribution list will be re-submitted if it fails audit.
+# It's also the number of rounds of submission data that will be kept on chain.
 allowed_failed_distributions: 3
 
 #Space in MBs for the account size, that holds the task data
-space: 0.1
+space: 1
 
 # Note that the value field in RequirementTag is optional, so it is up to you to include it or not based on your use case.
 # To add more global variables and task variables, please refer the type,value,description format shown below
