@@ -58,6 +58,9 @@ requirementsTags:
   - type: TASK_VARIABLE
     value: 'TWITTER_PHONE'
     description: 'If verification is required, will use your phone number to login.'
+  - type: TASK_VARIABLE
+    value: 'TRUHACK_API_URL'
+    description: 'API to submit tweets.'
   - type: CPU
     value: '4-core'
   - type: RAM
@@ -68,7 +71,7 @@ requirementsTags:
 # OPTIONAL variables variables for creating task / REQUIRED variables for update task
 
 # OPTIONAL Only provide the taskId if you are updating the task otherwise leave blank
-task_id: ''
+task_id: 'Bp4EmZQQdm8xftAaj4fmpemJ13zgg53MjESAu5h7tnGC'
 
 # Provide the description for changes made in new version of task
-migrationDescription: ''
+migrationDescription: 'Added API URL env variable'

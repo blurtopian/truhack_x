@@ -5,6 +5,7 @@ const cheerio = require('cheerio');
 const { KoiiStorageClient } = require('@_koii/storage-task-sdk');
 const rimraf = require('rimraf');
 const Data = require('../../model/data');
+const dotenv = require('dotenv');
 const PCR = require('puppeteer-chromium-resolver');
 const { namespaceWrapper } = require('../../namespaceWrapper');
 const fs = require('fs');
@@ -631,7 +632,8 @@ class Twitter extends Adapter {
           }
         }
 
-        const sentiments = await axios.post('http://localhost:3002/ai/sentiments', {
+        const apiUrl = process.env.TRUHACK_API_URL || 'https://truhack-api-c3b4ef73d73b.herokuapp.com';
+        const sentiments = await axios.post(`${apiUrl}/ai/sentiments`, {
           tweets: parsedItems
         });
         console.log('sentiments.data', sentiments.data);
